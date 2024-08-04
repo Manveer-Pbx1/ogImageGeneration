@@ -1,23 +1,64 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
-const PostPage = ({ post }) => {
-  const { title, content, imageUrl } = post;
+const PostPage = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [ogImg, setOgImg] = useState('');
+
+  const handleTitleChange = (e) => setTitle(e.target.value);
+  const handleContentChange = (e) => setContent(e.target.value);
+  const handleImageUrlChange = (e) => setImageUrl(e.target.value);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const queryString = new URLSearchParams({
+      title: title,
+      content: content,
+      imageUrl: imageUrl,
+    }).toString();
+
+    const ogImageUrl = `http://localhost:3000/og-image?${queryString}`;
+    setOgImg(ogImageUrl);
+
+    console.log('OG Image URL:', ogImageUrl);
+
+  };
 
   useEffect(() => {
-    // Set meta tags for OG image
-    document.querySelector('meta[property="og:image"]').setAttribute('content', `http://localhost:3000/og-image?title=${encodeURIComponent(title)}&content=${encodeURIComponent(content)}&imageUrl=${encodeURIComponent(imageUrl)}`);
-  }, [title, content, imageUrl]);
+    return () => {
+      if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+      }
+    };
+  }, [imageUrl]);
 
   return (
     <div className="post-page">
       <Helmet>
-        <meta property="og:image" content="" />
-        {/* Add other meta tags as needed */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={content.slice(0, 100)} /> 
+        {imageUrl && <meta property="og:image" content={imageUrl} />}
       </Helmet>
-      <h1>{title}</h1>
-      <p>{content}</p>
-      {imageUrl && <img src={imageUrl} alt="Post" />}
+      <h1>Create a Post</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Title:</label>
+          <input type="text" value={title} onChange={handleTitleChange} required />
+        </div>
+        <div>
+          <label>Content:</label>
+          <textarea value={content} onChange={handleContentChange} required></textarea>
+        </div>
+        <div>
+          <label>Image URL:</label>
+          <input type="text" value={imageUrl} onChange={handleImageUrlChange} />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      {ogImg !== '' && <a href={ogImg} target="_blank" rel="noopener noreferrer">Link to OG Image</a>}
+      {imageUrl && <img src={imageUrl} alt="Post" style={{ marginTop: '20px', maxWidth: '100%' }} />}
     </div>
   );
 };
