@@ -13,10 +13,11 @@ const PostPage = () => {
   useEffect(() => {
     if (contentRef.current) {
       const easyMDE = new EasyMDE({
+        //this is where we can tweak the markdown 
         element: contentRef.current,
         autoDownloadFontAwesome: true,
         maxHeight: "50px",
-        placeholder: "Write your content here...",
+        placeholder: "If the content is more than 9 lines, a fading effect with decreasing opacity can be seen",
         spellChecker: false,
         hideIcons: ["guide", "fullscreen", "image"],
         shortcuts: {
