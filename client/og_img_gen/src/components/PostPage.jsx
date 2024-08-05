@@ -45,7 +45,7 @@ const PostPage = () => {
       imageUrl: imageUrl,
     }).toString();
 
-    const ogImageUrl = `http://localhost:3000/og-image?${queryString}`;
+    const ogImageUrl = `https://ogimagegeneration.onrender.com/og-image?${queryString}`;
     setOgImg(ogImageUrl);
 
     console.log('OG Image URL:', ogImageUrl);
