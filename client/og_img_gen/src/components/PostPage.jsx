@@ -60,7 +60,7 @@ const PostPage = () => {
   }, [imageUrl]);
 
   return (
-    <div className="container mx-auto p-6 bg-gray-800 rounded-lg shadow-md max-w-4xl">
+    <div className="container mx-auto p-6 bg-gray-200 rounded-lg shadow-md max-w-4xl">
       <Helmet>
         <meta property="og:title" content={title} />
         <meta property="og:description" content={content.slice(0, 100)} />
@@ -96,7 +96,7 @@ const PostPage = () => {
         </div>
         <button
           type="submit"
-          className='bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-300'
+          className='bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 float-right w-[100px] font-bold transition duration-300'
         >
           Post
         </button>
