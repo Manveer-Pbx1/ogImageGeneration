@@ -80,9 +80,8 @@ const PostPage = () => {
         <div className="flex flex-col">
           <textarea
             ref={contentRef}
-            className='bg-white border border-gray-300 rounded-md text-lg px-4 py-2 focus:ring-2 focus:ring-blue-500'
+            className='bg-white border border-gray-300 rounded-md text-lg px-4 py-2'
             placeholder='Body Text'
-            required
           ></textarea>
         </div>
         <div className="flex flex-col">
