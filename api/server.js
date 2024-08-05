@@ -3,7 +3,11 @@ const puppeteer = require("puppeteer");
 const {marked} = require('marked');
 const app = express();
 const generateOgImage = async (title, content, imageUrl) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    executablePath: '/usr/bin/chromium', 
+    args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+  });
+  
   const page = await browser.newPage();
   const contentHtml = marked(content);
   const htmlContent = `
