@@ -1,11 +1,11 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
+const {marked} = require('marked');
 const app = express();
-
 const generateOgImage = async (title, content, imageUrl) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-
+  const contentHtml = marked(content);
   const htmlContent = `
     <html>
       <head>
@@ -36,7 +36,7 @@ const generateOgImage = async (title, content, imageUrl) => {
         <div class="container">
           <h1>${title}</h1>
           <div class="image-wrapper"></div>
-          <p>${content}</p>
+          <div>${contentHtml}</div>
           ${imageUrl ? `<img src="${imageUrl}" alt="Post Image"/>` : ""}
         </div>
       </body>
